@@ -1,0 +1,890 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+
+	<title>DevWeek 2015: Javascript: Drawings, Animations and Infographics</title>
+
+
+	<meta name="apple-mobile-web-app-capable" content="yes" />
+	<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+
+	<link rel="stylesheet" href="css/reveal.css">
+	<link rel="stylesheet" href="css/theme/white.css" id="theme">
+
+	<!-- Code syntax highlighting -->
+	<link rel="stylesheet" href="css/zenburn.css">
+
+	<!-- Printing and PDF exports -->
+	<script>
+	var link = document.createElement( 'link' );
+	link.rel = 'stylesheet';
+	link.type = 'text/css';
+	link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+	document.getElementsByTagName( 'head' )[0].appendChild( link );
+	</script>
+
+		<!--[if lt IE 9]>
+		<script src="lib/js/html5shiv.js"></script>
+		<![endif]-->
+	</head>
+
+	<body>
+
+		<div class="reveal">
+
+			<div class="slides">
+				<!--intro!-->
+  <section data-background="images/slide_title.jpg">
+    <p></p>
+  </section>
+
+
+        <section>
+          <h1>Javascript is a legitimate way for creating visuals for the web.</h1>
+        </section>
+
+        <section>
+          <h1>Programming can be a great tool for art and design on the web and beyond.</h1>
+        </section>
+
+        <section>
+          <h1>Frameworks we're going to look at</h1>
+          <ul>
+            <li>p5.js</li>
+            <li>Raphael.js</li>
+            <li>D3.js</li>
+            <li>three.js</li>
+          </ul>
+        </section>
+
+
+
+
+				<section>
+					<h1>Why use Javascript?</h1>
+				</section>
+
+				<section>
+					<h2>"This site requires [THIRD-PARTY] plug-in"</h2>
+				</section>
+
+				<section>
+					<h2>You probably already know the right amount of Javascript</h2>
+				</section>
+        <section>
+          <h2>take advantage of the interactivity and extensibility of javascript</h2>
+        </section>
+				<section>
+					<h2>Better developer quality of life</h2>
+				</section>
+
+				<!--On Canvas!-->
+				<section>
+					<h1>HTML5 &lt;canvas&gt;</h1>
+				</section>
+
+				<section>
+          <h2>Let's draw a circle</h2>
+          <p><a href="https://jsfiddle.net/amy_cheng/7jf5u2mj/">https://jsfiddle.net/amy_cheng/7jf5u2mj/</a></p>
+
+					<img src="images/canvasmovingcircle.gif" alt="">
+				</section>
+
+				<section>
+					<h2>write your mark-up</h2>
+					<pre><code data-trim class="html">
+						<canvas id="canvas"></canvas>
+					</code></pre>
+				</section>
+
+				<section>
+					<h2>reference canvas and set context</h2>
+					<pre>
+						<code data-trim class="javascript">
+var width = 500;
+var height = 400;
+
+var canvas=document.getElementById("canvas");
+var ctx=canvas.getContext("2d");
+					</code>
+				</pre>
+				</section>
+
+				<section>
+					<p>draw our circle</p>
+					<pre><code class="javascript" data-trim>
+ctx.beginPath();
+ctx.arc(xPos,height/2,50,0,2*Math.PI);
+ctx.stroke();
+					</code></pre>
+				</section>
+
+<section>
+	<h2>let's animate the circle</h2>
+        <p><a href="https://jsfiddle.net/amy_cheng/vjx9c5k8/">https://jsfiddle.net/amy_cheng/vjx9c5k8/</a></p>
+        </section>
+        <section>
+  <p>set initial properties</p>
+	<pre><code class="javascript" data-trim>
+
+			var xPos = 0;
+	    var direction = 1;
+	    var speed = 5;
+	</code></pre>
+</section>
+
+<section>
+  <h2>create draw function</h2>
+  <pre><code class="javascript">
+  var draw = function(){
+    ctx.clearRect(0,0,width,height);
+    ctx.beginPath();
+    ctx.arc(xPos,height/2,50,0,2*Math.PI);
+    ctx.stroke();
+    xPos=xPos+direction*speed;
+
+    if (xPos===450) {
+      direction=-1;
+    }
+
+    if (xPos===50) {
+      direction=1;
+    }
+
+    window.requestAnimationFrame(draw);
+  }
+  </code></pre>
+</section>
+
+<section>
+  <h2>Final Code</h2>
+	<pre><code class="javascript">
+    var xPos = 0;
+    var direction = 1;
+    var speed = 5;
+
+    var width = 500;
+    var height = 400;
+
+    var canvas=document.getElementById("canvas");
+    var ctx=canvas.getContext("2d");
+
+    var draw = function(){
+      ctx.clearRect(0,0,width,height);
+      ctx.beginPath();
+      ctx.arc(xPos,height/2,50,0,2*Math.PI);
+      ctx.stroke();
+
+      xPos=xPos+direction*speed;
+
+      if (xPos===450) {
+        direction=-1;
+      }
+
+      if (xPos===50) {
+        direction=1;
+      };
+
+      window.requestAnimationFrame(draw);
+    };
+
+    window.requestAnimationFrame(draw);
+
+	</code></pre>
+</section>
+
+<section>
+  <h2>"oops"</h2>
+  <img src="images/canvasmistake.gif" alt="">
+</section>
+
+<section>
+  <h2>Why use a framework?</h2>
+  <ul>
+    <li>synatic sugar</li>
+    <li>code organization</li>
+    <li>developer quality of life!</li>
+  </ul>
+</section>
+
+      <!--P5.js!-->
+      <section>
+        <h1>drawing with p5.js</h1>
+        <h2>"a software sketchbook"</h2>
+      </section>
+
+      <section>
+        <h2>flocking behavior (in javascript!)</h2>
+        <p><a href="http://p5js.org/learn/demos/Hello_P5_Flocking.php">http://p5js.org/learn/demos/Hello_P5_Flocking.php</a></p>
+        <img src="images/p5flocking.gif" alt="">
+      </section>
+
+      <section>
+        <img src="images/processing_logo.png" alt="">
+      </section>
+
+
+      <section>
+        <h2>a programming language for artists.</h2>
+        <h2>a way of making art for programmers.</h2>
+      </section>
+
+
+      <section>
+        <h2>accessibility</h2>
+        <p>ellipse() vs context.arc()</p>
+      </section>
+
+      <section>
+        <div>
+        <h2>setup()</h2>
+        <pre><code class="javascript">
+          function setup(){
+            //runs once
+          }
+        </code></pre>
+        </div>
+      </section>
+
+      <section>
+        <div>
+          <h2>draw()</h2>
+          <pre><code class="javascript">
+            function draw(){
+            //runs continuously
+          }
+          </code></pre>
+        </div>
+      </section>
+
+      <section>
+        <h2>Let's draw our circle again</h2>
+        <pre><code class="javascript" data-trim>
+    function setup() {
+      createCanvas(500, 400);
+      background(255);
+      ellipse(0, 200, 50, 50);
+    }
+        </code></pre>
+      </section>
+
+      <section>
+        <h2>let's animate our circle</h2>
+        <p>create some variables</p>
+<pre><code class="javascript" data-trim>
+  var xPos = 0;
+  var direction = 1;
+  var speed = 5;
+
+  var width = 500;
+  var height = 400;
+</code></pre>
+      </section>
+
+      <section>
+        <h2>refactor the setup() function</h2>
+        <pre><code class="javascript" data-trim>
+  function setup() {
+    createCanvas(width, height);
+    background(255);
+  }
+        </code></pre>
+      </section>
+
+      <section>
+        <h2>create the draw function</h2>
+        <pre><code class="javascript" data-trim>
+function draw(){
+    background(255);
+    ellipse(xPos, height/2, 50, 50);
+    xPos=xPos+direction*speed;
+
+      if (xPos===500) {
+        direction=-1;
+      }
+
+      if (xPos===0) {
+        direction=1;
+      };
+  }
+        </code></pre>
+      </section>
+
+<section>
+  <h2>particle systems</h2>
+  <img src="images/particlesystem.gif" alt="">
+  <p><a href="http://p5js.org/learn/examples/Simulate_Particle_System.php">http://p5js.org/learn/examples/Simulate_Particle_System.php</a></p>
+</section>
+
+<section>
+  <h2>ParticleSystem object</h2>
+  <pre><code class="javascript" data-trim>
+  var ParticleSystem = function(position) {
+    this.origin = position.get();
+    this.particles = [];
+  };
+  </code></pre>
+</section>
+<section>
+  <h2>Add particles</h2>
+  <pre><code class="javascript" data-trim>
+    function setup() {
+  createCanvas(720, 400);
+  system = new ParticleSystem(createVector(width/2, 50));
+}
+
+function draw() {
+  background(51);
+  system.addParticle();
+  system.run();
+}
+
+//...
+    ParticleSystem.prototype.addParticle = function() {
+  this.particles.push(new Particle(this.origin));
+};
+  </code></pre>
+</section>
+
+<section>
+  <h2>Particle object</h2>
+  <pre><code class="javascript" data-trim>
+    var Particle = function(position) {
+  this.acceleration = createVector(0, 0.05);
+  this.velocity = createVector(random(-1, 1), random(-1, 0));
+  this.position = position.get();
+  this.lifespan = 255.0;
+};
+  </code></pre>
+</section>
+
+<section>
+  <h2>Extend particle object</h2>
+  <pre><code class="javascript" data-trim>
+  Particle.prototype.run = function() {
+    this.update();
+    this.display();
+  };
+
+  Particle.prototype.update = function(){
+    ...
+  };
+
+  Particle.prototype.display = function() {
+    ...
+  };
+
+  Particle.prototype.isDead = function(){
+    ...
+  };
+  </code></pre>
+</section>
+
+<section>
+  <h2>Event handlers</h2>
+  <p>handlers are their own functions</p>
+  <pre><code class="javascript" data-trim>
+    function mouseClicked(){
+//...
+}
+  </code></pre>
+</section>
+
+<section>
+  <img src="images/weave.gif" alt="">
+  <p>Weave</p>
+  <p><a href="http://amycheng.github.io/p5weave/">http://amycheng.github.io/p5weave/</a></p>
+</section>
+
+<section>
+  <h2>Example: mouse dragged</h2>
+  <pre><code class="javascript" data-trim>
+    function detectQuad(){
+    background(255,255,255,5);
+    stroke(random(255),0,random(255),random(100,255));
+    line(0,0,mouseX,mouseY);
+    line(0,_height,mouseX,mouseY);
+    line(_width,0,mouseX,mouseY);
+    line(_width,_height,mouseX,mouseY);
+}
+function mouseDragged(){
+detectQuad();
+}
+  </code></pre>
+</section>
+
+				<!--Raphael.js!-->
+<section>
+  <h1>Raphael.js</h1>
+  <h2 class="fragment">javascript library for vector graphics</h2>
+</section>
+<section>
+  <h2>SVG</h2>
+  <ul>
+    <li>XML</li>
+    <li>math data versus pixel data</li>
+    <li>exist in the DOM</li>
+  </ul>
+</section>
+<section>
+  <h2>Differences from P5.js</h2>
+  <ul>
+    <li class="fragment">SVG instead of canvas</li>
+    <li class="fragment">animate() instead of function draw(){}</li>
+  </ul>
+</section>
+
+<section>
+  <h2>let's draw our circle (for the third time)</h2>
+  <h2 class="fragment">intialize raphael</h2>
+  <pre class="fragment"><code class="javascript" data-trim>
+    var canvas = document.getElementById('canvas');
+  var paper = Raphael(canvas, 500, 400);</code></pre>
+</section>
+
+<section>
+  <h2>draw the circle</h2>
+  <pre><code class="javascript" data-trim>
+    var circle = paper.circle(0, 200, 50);
+    circle.attr("fill", "#fff");
+    circle.attr("stroke", "#000");</code></pre>
+</section>
+
+<section>
+  <h2>Let's animate our circle again</h2>
+  <p><a href="https://jsfiddle.net/amy_cheng/Lfy9xce1/">https://jsfiddle.net/amy_cheng/Lfy9xce1/</a></p>
+</section>
+
+<section>
+  <h2>animate the circle</h2>
+  <pre><code class="javascript" data-trim>
+        var left = function(){
+      circle.animate({cx: 0}, 2000, 'linear',right);
+    };
+    var right = function(){
+      circle.animate({cx: 500}, 2000, 'linear',left);
+    };
+
+    right();
+  </code></pre>
+</section>
+
+<section>
+  <h2>.animate()</h2>
+  <img src="images/raphaelcircle.gif" alt="">
+</section>
+
+      <!--D3.js!-->
+<section>
+  <h1>D3.js</h1>
+  <h2 class="fragment">"data-driven documents"</h2>
+</section>
+
+<section>
+  <h2>Citibike explorer</h2>
+  <p><a href="http://citibike-explorer.herokuapp.com/">http://citibike-explorer.herokuapp.com/</a></p>
+  <img src="images/citibike.jpeg" alt="">
+</section>
+    <section>
+          <h2>Measles Outbreak</h2>
+          <p><a href="http://www.theguardian.com/society/ng-interactive/2015/feb/05/-sp-watch-how-measles-outbreak-spreads-when-kids-get-vaccinated">http://www.theguardian.com/society/ng-interactive/2015/feb/05/-sp-watch-how-measles-outbreak-spreads-when-kids-get-vaccinated</a></p>
+            <img src="images/measles.png" alt="">
+        </section>
+<section>
+  <h2>Hip Hop Almanac</h2>
+  <p><a href="http://www.moma.org/interactives/exhibitions/2011/talktome/objects/146253/">http://www.moma.org/interactives/exhibitions/2011/talktome/objects/146253/</a>
+  </p>
+    <img src="images/hiphop.jpg" alt="">
+</section>
+
+<section>
+
+  <h2>a big toolbox for making data visualizations and infographics</h2>
+  <ul>
+    <li class="fragment">data import and parsing</li>
+    <li class="fragment">generating color palettes</li>
+    <li class="fragment">animation</li>
+    <li class="fragment">map building</li>
+    <li class="fragment">time parasing</li>
+    <li class="fragment">built-in infographic layouts</li>
+  </ul>
+</section>
+
+<section data-background="images/d3_chaining.png">
+</section>
+
+<section>
+  <h2>SVG</h2>
+  <img src="images/citibike_graphic.png" alt="">
+</section>
+
+<section>
+  <img src="images/citibike_sourcecode.png" alt="">
+</section>
+
+<section>
+  <h2>import data</h2>
+  <pre><code class="javascript" data-trim>
+  d3.csv(...); //load external csv
+  d3.csv.parse(...); //parse string as csv
+  d3.json(...) //load external csv
+  </code></pre>
+</section>
+
+<section>
+  <h2>exploratory statistics</h2>
+  <pre><code class="javascript" data-trim>
+    var data = [1,2,3,4,5];
+
+    d3.max(data) // returns 5
+    d3.mean(data) // returns 3
+
+  </code></pre>
+</section>
+
+<section>
+  <h2>Data sorting</h2>
+  <pre><code class="javascript" data-trim>
+    var data = [1,2,3,4,5];
+
+    d3.descending(data) // returns [5,4,3,2,1]
+  </code></pre>
+</section>
+
+<section>
+  <h2>let's make a bar graph</h2>
+  <img src="images/d3bargraph.png" alt="">
+</section>
+
+<section>
+  <h2>initialize data</h2>
+  <pre><code class="javascript" data-trim>
+      var data = [
+  {"day":"Monday","count":3},
+  {"day":"Tuesday","count":5},
+  {"day":"Wednesday","count":9},
+  {"day":"Thursay","count":2}
+  ];
+
+  var values = data.map(function(val){
+    return val.count;
+  })
+  </code></pre>
+</section>
+
+<section>
+  <h2>map data to pixels</h2>
+  <pre><code class="javascript" data-trim>
+      var calcHeight = d3.scale.linear()
+  .domain([0, d3.max(values)])
+  .range([0, chartHeight]);
+  </code></pre>
+</section>
+
+<section>
+  <h2>initialize bars</h2>
+  <pre><code class="javascript" data-trim>
+    var chart = d3.select("#canvas")
+  .attr("width", chartWidth)
+  .attr("height", chartHeight);
+
+  var bar = chart.selectAll("g")
+  .data(data)
+  .enter()
+  .append("g");
+  </code></pre>
+</section>
+
+<section>
+  <h2>map data to bars</h2>
+  <pre><code class="javascript" data-trim>
+      bar
+    .append("rect")
+    .attr("x",function(d, i) {
+        return i * 25 + 50;  //Bar width of 20 plus 1 for padding
+      })
+    .attr("y",function(d){
+      return chartHeight - calcHeight(d.count);
+    })
+    .attr("width", 20)
+    .attr("height",function(d){
+      if (d.count>5) {
+        console.log(typeof this);
+      };
+      return calcHeight(d.count)
+    });
+  </code></pre>
+</section>
+
+<section>
+  <h2>label values</h2>
+  <pre><code class="javascript" data-trim>
+  bar
+    .append("text")
+    .attr("x", function(d, i) { return i * 28 + 50; })
+    .attr("y", function(d){return chartHeight-calcHeight(d.count)+10;})
+    .attr("dy", ".35em")
+    .attr("fill","#FFF")
+    .text(function(d) { return d.count; });
+  </code></pre>
+</section>
+
+<section>
+  <h2>create axis</h2>
+  <pre>
+    <code class="javascript" data-trim>
+        var yAxisScale = d3.scale.linear()
+  .domain([0, d3.max(values)])
+  .range([chartHeight, d3.max(values)]);
+
+var yAxis = d3.svg.axis();
+yAxis
+  .scale(yAxisScale)
+  .orient("left")
+  .ticks(10);
+
+chart
+.append("g")
+.attr('transform', 'translate(20,0)')
+.call(yAxis)
+.attr("class","axis");
+
+    </code>
+  </pre>
+</section>
+
+
+<section>
+  <h2>Making a pie graph</h2>
+  <p><a href="http://chimera.labs.oreilly.com/books/1230000000345/ch11.html#_pie_layout">http://chimera.labs.oreilly.com/books/1230000000345/ch11.html#_pie_layout</a></p>
+</section>
+
+<section>
+  <h2>layouts</h2>
+  <p>e.g. pie graph</p>
+  <pre><code class="javascript" data-trim>
+    arcs.append("path")
+          .attr("fill", function(d, i) {
+            return color(i);
+          })
+          .attr("d", arc);
+
+      //Labels
+      arcs.append("text")
+          .attr("transform", function(d) {
+            return "translate(" + arc.centroid(d) + ")";
+          })
+          .attr("text-anchor", "middle")
+          .text(function(d) {
+            return d.value;
+          });</code></pre>
+</section>
+
+				<!--Three.js!-->
+        <section>
+          <h1>Three.js</h1>
+          <h2>"makes webGL simpler"</h2>
+        </section>
+
+        <section>
+          <h2>Beauty Breakup</h2>
+          <p><a href="beautybreakup.amycheng.info">beautybreakup.amycheng.info</a></p>
+          <img src="images/threejsbeautybreakup.jpeg" alt="">
+        </section>
+
+        <section>
+          <h2>Lights</h2>
+          <p><a href="lights.helloenjoy.com">lights.helloenjoy.com</a></p>
+          <img src="images/elliegoulding.gif" alt="">
+        </section>
+        <section>
+          <h2>Three.js Example</h2>
+          <p><a href="http://www.findyourwaytooz.com/">Find your way to Oz</a></p>
+          <img src="images/oz.jpeg" alt="">
+        </section>
+        <section>
+          <h2>three.js: toolbox for 3D using javascript</h2>
+          <ul>
+            <li class="fragment">geometry</li>
+            <li class="fragment">lighting</li>
+            <li class="fragment">animation</li>
+            <li class="fragment">postprocessing</li>
+          </ul>
+        </section>
+
+        <section>
+          <h2>let's create a cube</h2>
+          <p><a href="http://threejs.org/examples/#webgl_geometry_cube">http://threejs.org/examples/#webgl_geometry_cube</a></p>
+          <img src="images/threejscube.gif" alt="">
+        </section>
+
+        <section>
+          <h2>initialize</h2>
+          <pre><code class="javascript" data-trim>
+     function init() {
+
+        renderer = new THREE.WebGLRenderer();
+        renderer.setPixelRatio( window.devicePixelRatio );
+        renderer.setSize( window.innerWidth, window.innerHeight );
+        document.body.appendChild( renderer.domElement );
+        //...
+        scene = new THREE.Scene();
+      }
+          </code></pre>
+        </section>
+
+        <section>
+          <h2>create camera</h2>
+          <pre><code class="javascript" data-trim>
+            camera = new THREE.PerspectiveCamera( 70, window.innerWidth / window.innerHeight, 1, 1000 );
+        camera.position.z = 400;
+          </code></pre>
+        </section>
+
+        <section>
+          <h2>create cube</h2>
+          <pre><code class="javascript" data-trim>
+            var geometry = new THREE.BoxGeometry( 200, 200, 200 );
+
+        var texture = THREE.ImageUtils.loadTexture( 'textures/crate.gif' );
+        texture.anisotropy = renderer.getMaxAnisotropy();
+
+        var material = new THREE.MeshBasicMaterial( { map: texture } );
+
+        mesh = new THREE.Mesh( geometry, material );
+        scene.add( mesh );
+          </code></pre>
+        </section>
+
+        <section>
+          <h2>animate cube</h2>
+          <pre><code class="javascript" data-trim>
+            function animate() {
+
+        requestAnimationFrame( animate );
+
+        mesh.rotation.x += 0.005;
+        mesh.rotation.y += 0.01;
+
+        renderer.render( scene, camera );
+}
+          </code></pre>
+        </section>
+
+        <section>
+          <h2>beauty breakup</h2>
+          <p><a href="http://beautybreakup.amycheng.info/">http://beautybreakup.amycheng.info/</a></p>
+        </section>
+
+        <section>
+          <h2>initialize lights</h2>
+          <pre><code data-trim class="javascript">
+function spotlight(e,t,n){var r=new THREE.DirectionalLight(16777215);r.position.x=e,r.position.y=t,r.position.z=n,scene.addLight(r)}function ambientWhite(){scene.addLight(new THREE.AmbientLight(16777215))}function colorLights(){light1=new THREE.PointLight(16711744),scene.addLight(light1),light2=new THREE.PointLight(16639),scene.addLight(light2),light3=new THREE.PointLight(16774228),scene.addLight(light3)}function animateColorLights(){var e=(new Date).getTime()*5e-4;light2.position.z=600,light1.position.x=10+Math.sin(e*.7)*800,light1.position.y=50+Math.cos(e*.5)*800,light1.position.z=130+Math.cos(e*.3)*lightDist,light2.position.x=-400+Math.cos(e*.3)*400,light2.position.y=-400+Math.sin(e*.5)*400,light2.position.z=lightDist+Math.sin(e*.7),light3.position.x=-100+Math.sin(e*.7)*200,light3.position.y=200+Math.cos(e*.3)*200,light3.position.z=Math.sin(e*.5)*lightDist}var light1,light2,light3;
+          </code></pre>
+        </section>
+
+        <section>
+          <h2>create reflection</h2>
+          <pre><code data-trim class="javascript">
+            var ReflectionUrls = ["images/r_py.jpg", "images/r_py.jpg",
+"images/r_px.jpg","images/r_px.jpg",
+"images/r_pz.jpg", "images/r_pz.jpg" ];
+var reflectionTexture =
+THREE.ImageUtils.loadTextureCube( ReflectionUrls );
+
+var mirrorMaterial = new THREE.MeshPhongMaterial({
+ color: 0xeeeeee,
+  specular: 0xFFF896,
+   envMap: reflectionTexture,
+    shininess: 100,
+     reflectivity:100,
+      shading: THREE.SmoothShading});
+
+          </code></pre>
+
+        </section>
+
+        <section>
+          <h2>generate mirror pieces</h2>
+          <img src="images/beautybreakup.png" alt="">
+        </section>
+
+        <section>
+          <h2>animate mirror pieces</h2>
+          <img src="images/beautybreakup_animate.gif" alt="">
+        </section>
+
+
+        <section>
+          <h2>shaders</h2>
+          <img src="images/threejswater.gif" alt="">
+          <p><a href="http://threejs.org/examples/#webgl_shaders_ocean">http://threejs.org/examples/#webgl_shaders_ocean</a></p>
+        </section>
+
+        <section>
+          <h2>postprocessing effects</h2>
+          <img src="images/threejspp.gif" alt="">
+          <p><a href="http://threejs.org/examples/#webgl_postprocessing">http://threejs.org/examples/#webgl_postprocessing</a></p>
+        </section>
+
+        <section>
+          <h2>"Why can't I see anything?"</h2>
+          <ul>
+            <li class="fragment">no camera</li>
+            <li class="fragment">no lighting</li>
+            <li class="fragment">wrong zoom level</li>
+            <li class="fragment">weak GPU</li>
+          </ul>
+        </section>
+
+
+				<!--In conclusion!-->
+        <section>
+          <h1>conclusion</h1>
+        </section>
+
+        <section>
+          <h2>javascript = more than one way to do something</h2>
+        </section>
+
+        <section>
+          <h2>DON'T ATTEMPT TO MAKE ANOTHER FRAMEWORK</h2>
+          <p>(unless you really need to or it's an academic exercise but you probably don't need to make your own framework)</p>
+        </section>
+
+        <section>
+          <h1>Thanks</h1>
+          <p>Amy Cheng</p>
+          <p>amy (at) amycheng.info</p>
+          <p>@am3thyst</p>
+        </section>
+
+<script src="lib/js/head.min.js"></script>
+<script src="js/reveal.js"></script>
+
+<script>
+
+			// Full list of configuration options available at:
+			// https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				controls: false,
+				progress: true,
+				history: true,
+				center: true,
+        overview: true,
+				transition: 'slide', // none/fade/slide/convex/concave/zoom
+
+				// Optional reveal.js plugins
+				dependencies: [
+				{ src: 'plugin/highlight/highlight.js', async: true, condition: function() { return !!document.querySelector( 'pre code' ); }, callback: function() { hljs.initHighlightingOnLoad(); } }
+				]
+			});
+
+			</script>
+
+		</body>
+		</html>
