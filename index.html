@@ -42,6 +42,9 @@
     <p></p>
   </section>
 
+      <section>
+        <h1>drawings = graphics rendered dynamically in the browser</h1>
+      </section>
 
         <section>
           <h1>Javascript is a legitimate way for creating visuals for the web.</h1>
@@ -130,10 +133,9 @@ ctx.stroke();
         <section>
   <p>set initial properties</p>
 	<pre><code class="javascript" data-trim>
-
-			var xPos = 0;
-	    var direction = 1;
-	    var speed = 5;
+var xPos = 0;
+var direction = 1;
+var speed = 5;
 	</code></pre>
 </section>
 
@@ -237,6 +239,10 @@ ctx.stroke();
       <section>
         <h2>accessibility</h2>
         <p>ellipse() vs context.arc()</p>
+      </section>
+
+      <section>
+        <h2>don't underestimate collaborating with non-developers</h2>
       </section>
 
       <section>
@@ -430,6 +436,16 @@ detectQuad();
     <li>exist in the DOM</li>
   </ul>
 </section>
+
+<section>
+  <h2>Tiger!</h2>
+  <p><a href="http://raphaeljs.com/tiger.html">http://raphaeljs.com/tiger.html</a></p>
+  <img src="images/raphaeltiger.png" alt="">
+</section>
+
+<section data-background="images/raphaeltigersource.png">
+</section>
+
 <section>
   <h2>Differences from P5.js</h2>
   <ul>
@@ -505,12 +521,12 @@ detectQuad();
 
   <h2>a big toolbox for making data visualizations and infographics</h2>
   <ul>
-    <li class="fragment">data import and parsing</li>
-    <li class="fragment">generating color palettes</li>
-    <li class="fragment">animation</li>
-    <li class="fragment">map building</li>
-    <li class="fragment">time parasing</li>
-    <li class="fragment">built-in infographic layouts</li>
+    <li>data import and parsing</li>
+    <li>generating color palettes</li>
+    <li>animation</li>
+    <li>map building</li>
+    <li>time parasing</li>
+    <li>built-in infographic layouts</li>
   </ul>
 </section>
 
@@ -703,7 +719,7 @@ chart
         </section>
         <section>
           <h2>Three.js Example</h2>
-          <p><a href="http://www.findyourwaytooz.com/">Find your way to Oz</a></p>
+          <p><a href="http://www.findyourwaytooz.com/">www.findyourwaytooz.com</a></p>
           <img src="images/oz.jpeg" alt="">
         </section>
         <section>
@@ -841,6 +857,33 @@ var mirrorMaterial = new THREE.MeshPhongMaterial({
           </ul>
         </section>
 
+        <!--When not to use Javascript!-->
+
+        <section>
+          <h1>When not to use javascript</h1>
+        </section>
+
+        <section>
+          <h2>simple animations could be done with CSS3</h2>
+          <pre><code class="css">
+    .circle {
+      animate:...;
+    }
+    @keyframes move {
+      50% {
+        transform: ...;
+      }
+    }
+          </code></pre>
+        </section>
+
+        <section>
+          <h2>performance is a concern</h2>
+        </section>
+
+        <section>
+          <h2>responsive design with JS drawing requires investment</h2>
+        </section>
 
 				<!--In conclusion!-->
         <section>
